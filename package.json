@@ -1,0 +1,30 @@
+{
+    "name": "fetch-next-api",
+    "version": "1.0.0",
+    "keywords": [
+        "fetch",
+        "next",
+        "next.js",
+        "api"
+    ],
+    "description": "A simple wrapper to simplify the use of the `fetch` API. Designed for use in Next.js (App Router).",
+    "author": "https://github.com/przpl",
+    "license": "MIT",
+    "homepage": "https://github.com/przpl/fetch-next-api",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/przpl/fetch-next-api.git"
+    },
+    "bugs": {
+        "url": "https://github.com/przpl/fetch-next-api/issues"
+    },
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "rimraf -rf dist && tsc",
+        "npm:publish": "npm run build && npm publish --public"
+    },
+    "devDependencies": {
+        "rimraf": "5.0.5",
+        "typescript": "5.3.3"
+    }
+}
