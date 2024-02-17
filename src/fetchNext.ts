@@ -1,4 +1,4 @@
-import { ApiResponseError } from "./apiResponseError";
+import { FetchNextError } from "./fetchNextError";
 import { DefaultRequestInit } from "./types/defaultRequestInit";
 import { FetchNextRequestInit } from "./types/fetchNextRequestInit";
 
@@ -57,7 +57,7 @@ export class FetchNext {
         }
 
         if (!response.ok) {
-            throw new ApiResponseError({ method: finalInit?.method || "GET", url, ssr }, { statusCode: response.status, data });
+            throw new FetchNextError({ method: finalInit?.method || "GET", url, ssr }, { statusCode: response.status, data });
         }
 
         return data;
