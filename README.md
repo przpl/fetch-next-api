@@ -1,5 +1,9 @@
 # fetch-next-api
 
+[![NPM version](https://img.shields.io/npm/v/fetch-next-api)](https://www.npmjs.com/package/fetch-next-api)
+[![NPM downloads](https://img.shields.io/npm/dm/fetch-next-api)](https://www.npmjs.com/package/fetch-next-api)
+[![NPM bundle size](https://img.shields.io/bundlephobia/min/fetch-next-api)](https://www.npmjs.com/package/fetch-next-api)
+
 ## Description
 
 A simple wrapper to simplify the use of the `fetch` API. Designed for use in Next.js App Router.
