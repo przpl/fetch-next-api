@@ -13,6 +13,7 @@ A simple wrapper to simplify the use of the `fetch` API. Designed for use in Nex
 -   SSR support
 -   `get()`, `post()`, `put()`, `patch()`, `delete()` methods with native fetch options
 -   Access to native-like fetch method
+-   Request interceptor
 
 ## Requirements
 
@@ -36,4 +37,20 @@ import { FetchNext } from "fetch-next-api";
 import { cookies } from "next/headers";
 
 const ssrApi = new FetchNext({ baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, ssr: { getClientCookies: () => cookies().toString() } });
+```
+
+### Request interceptor
+
+```typescript
+const api = new FetchNext({
+    interceptors: {
+        request: (input, init) => {
+            init.headers = {
+                ...init.headers,
+                "X-Api-Key": "my-api-key",
+            };
+            return init;
+        },
+    },
+});
 ```

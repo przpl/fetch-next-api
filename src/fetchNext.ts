@@ -74,7 +74,7 @@ export class FetchNext {
             headers["Content-Type"] = "application/json";
         }
 
-        return await this.fetch<T>(input, {
+        let fetchNextInit: FetchNextRequestInit = {
             method,
             body: data.body !== undefined && data.body !== null && !(data.body instanceof FormData) ? JSON.stringify(data.body) : data.body,
             ...init,
@@ -82,7 +82,13 @@ export class FetchNext {
                 ...headers,
                 ...init?.headers,
             },
-        });
+        };
+
+        if (this.defaultInit?.interceptors?.request) {
+            fetchNextInit = this.defaultInit.interceptors.request(input, fetchNextInit);
+        }
+
+        return await this.fetch<T>(input, fetchNextInit);
     }
 
     private combineUrl(path: RequestInfo | URL) {
