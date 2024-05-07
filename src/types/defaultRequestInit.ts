@@ -7,6 +7,6 @@ export interface DefaultRequestInit extends RequestInit {
         getClientCookies?: () => string;
     };
     interceptors?: {
-        request?: (input: RequestInfo | URL, init: FetchNextRequestInit) => FetchNextRequestInit;
+        request?: (fetchInput: string, init: FetchNextRequestInit) => FetchNextRequestInit;
     };
 }

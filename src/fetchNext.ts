@@ -28,7 +28,7 @@ export class FetchNext {
     }
 
     public async fetch<T = void>(input: RequestInfo | URL, init?: Readonly<FetchNextRequestInit>): Promise<T> {
-        const finalInit = { ...this.defaultInit, ...init };
+        let finalInit: RequestInit = { ...this.defaultInit, ...init };
         const ssr = { clientCookiesAttached: false };
 
         if (init?.ssr?.clientCookies) {
@@ -40,6 +40,11 @@ export class FetchNext {
         }
 
         const url = this.combineUrl(input);
+
+        if (this.defaultInit?.interceptors?.request) {
+            finalInit = this.defaultInit.interceptors.request(url, finalInit);
+        }
+
         const response = await fetch(url, finalInit);
 
         let data: T;
@@ -74,7 +79,7 @@ export class FetchNext {
             headers["Content-Type"] = "application/json";
         }
 
-        let fetchNextInit: FetchNextRequestInit = {
+        return await this.fetch<T>(input, {
             method,
             body: data.body !== undefined && data.body !== null && !(data.body instanceof FormData) ? JSON.stringify(data.body) : data.body,
             ...init,
@@ -82,13 +87,7 @@ export class FetchNext {
                 ...headers,
                 ...init?.headers,
             },
-        };
-
-        if (this.defaultInit?.interceptors?.request) {
-            fetchNextInit = this.defaultInit.interceptors.request(input, fetchNextInit);
-        }
-
-        return await this.fetch<T>(input, fetchNextInit);
+        });
     }
 
     private combineUrl(path: RequestInfo | URL) {
