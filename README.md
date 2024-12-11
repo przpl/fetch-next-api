@@ -36,7 +36,10 @@ const user = await api.get<UserInterface>("/user", { next: { revalidate: false }
 import { FetchNext } from "fetch-next-api";
 import { cookies } from "next/headers";
 
-const ssrApi = new FetchNext({ baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, ssr: { getClientCookies: () => cookies().toString() } });
+const ssrApi = new FetchNext({
+    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+    ssr: { getClientCookies: async () => (await cookies()).toString() },
+});
 ```
 
 ### Request interceptor

@@ -35,7 +35,8 @@ export class FetchNext {
             finalInit.headers = { ...finalInit.headers, Cookie: init.ssr.clientCookies };
             ssr.clientCookiesAttached = true;
         } else if (this.defaultInit?.ssr?.getClientCookies) {
-            finalInit.headers = { ...finalInit.headers, Cookie: this.defaultInit.ssr?.getClientCookies() };
+            const cookie = await this.defaultInit.ssr.getClientCookies();
+            finalInit.headers = { ...finalInit.headers, Cookie: cookie };
             ssr.clientCookiesAttached = true;
         }
 
@@ -62,7 +63,7 @@ export class FetchNext {
         }
 
         if (!response.ok) {
-            throw new FetchNextError({ method: finalInit?.method || "GET", url, ssr }, { statusCode: response.status, data });
+            throw new FetchNextError({ method: finalInit.method || "GET", url, ssr }, { statusCode: response.status, data });
         }
 
         return data;
